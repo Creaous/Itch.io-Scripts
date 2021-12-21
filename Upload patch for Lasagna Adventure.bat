@@ -24,7 +24,17 @@ echo Please check the above to make sure they are all correct.
 echo.
 pause
 echo.
+echo Do you want to create zip files for Windows and Linux?
+set /P archive=
+echo.
 
+IF "%archive%"=="y" (
+	goto createzip
+) ELSE (
+	goto loginandpush
+)
+
+:createzip
 echo Creating archive for Windows...
 del "%basepath%\Windows.zip"
 %zippath% a -mm=Deflate -mfb=258 -mpass=15 -mx=9 -r "%basepath%\Windows.zip" "%winpath%/*"
@@ -35,6 +45,7 @@ del "%basepath%\Linux.zip"
 %zippath% a -mm=Deflate -mfb=258 -mpass=15 -mx=9 -r "%basepath%\Linux.zip" "%linuxpath%/*"
 echo.
 
+:loginandpush
 echo Attempting to login to itch.io...
 %butlerpath% login
 
